@@ -1,22 +1,10 @@
-from enum import Enum, auto
-
-class ClothingSize(Enum):
-    XXS = auto()
-    XS = auto()
-    S = auto()
-    M = auto()
-    L = auto()
-    XL = auto()
-    XXL = auto()
-    XXXL = auto()
-
 class User:
     
-    def __init__(self, shoe_size=10, shirt_size=ClothingSize.L, pant_size=ClothingSize.L):
+    def __init__(self, shoe_size=10, shirt_size="L", pant_size="L"):
         self.data = {}
-        self.shoe_size = shoe_size
-        self.shirt_size = shirt_size
-        self.pant_size = pant_size
+        self._shoe_size = shoe_size
+        self._shirt_size = shirt_size
+        self._pant_size = pant_size
     
     def set_all_data(self, data_set):
         self.data = dict(data_set)
@@ -28,13 +16,13 @@ class User:
         return self.data[data]
 
     def shoe_size(self):
-        return self.shoe_size
+        return self._shoe_size
 
     def shirt_size(self):
-        return self.shirt_size
+        return self._shirt_size
 
     def pant_size(self):
-        return self.pant_size
+        return self._pant_size
     
 
 

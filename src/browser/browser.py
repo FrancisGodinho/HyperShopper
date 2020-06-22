@@ -19,10 +19,10 @@ class Browser:
     def close(self):
         self.driver.quit()
 
-    def add_to_cart(self):
+    def add_to_cart(self, timeout=10):
         pass
 
-    def add_to_cart_bylink(self):
+    def add_to_cart_bylink(self, timeout=10):
         pass
 
     def checkout(self, timeout=10):
