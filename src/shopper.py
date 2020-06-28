@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from browser.supreme_browser import SupremeBrowser
 from user.user import User
 
-user = User(shirt_size="L") #set size
+user = User(shirt_size="Large") #set size
 user.set_all_data({
         "name": "Francis Godinho",
         "email": "francisgodinho2010@gmail.com",
@@ -22,7 +22,7 @@ user.set_all_data({
 
 browser = SupremeBrowser(user)
 browser.launch()
-added = browser.add_to_cart_bylink("https://www.supremenewyork.com/shop/hats/rzh8rviy0/gnxer4287")
+added = browser.add_to_cart_bylink("https://www.supremenewyork.com/shop/jackets/p7z6mv4ur/p5eiyuxlj")
 if added:
         browser.checkout()
         

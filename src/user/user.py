@@ -1,6 +1,6 @@
 class User:
     
-    def __init__(self, shoe_size=10, shirt_size="L", pant_size="L"):
+    def __init__(self, shoe_size=10, shirt_size="Large", pant_size="Large"):
         self.data = {}
         self._shoe_size = shoe_size
         self._shirt_size = shirt_size

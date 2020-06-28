@@ -28,7 +28,7 @@ class SupremeBrowser(Browser):
         # Check if this item has sizes and select the appropriate size 
         try:
             if self.driver.find_element_by_xpath('//*[@id="s"]').get_attribute("aria-labelledby") is not None:
-                if self.user.shirt_size().upper() not in WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="s"]'))).get_attribute('innerHTML').upper():
+                if user_size.upper() not in WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="s"]'))).get_attribute('innerHTML').upper():
                     return False
 
                 WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="s"]'))).send_keys(user_size)
