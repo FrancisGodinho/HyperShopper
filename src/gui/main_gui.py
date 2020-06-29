@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 import datetime
 import time
 import _thread
@@ -9,9 +10,7 @@ from user.user import User
 from browser.browser import Browser
 from browser.supreme_browser import SupremeBrowser
 
-
 class MainGUI:
-
 
     def __init__(self):
         self.root = Tk()
@@ -45,13 +44,14 @@ class MainGUI:
 
         # time
         Label(info_frame, text="Time:", font=("Comic Sans", 13)).grid(row=1, column=0, sticky=W)
-        self.hour = Entry(info_frame, font=("Comic Sans", 12))
-        self.minute = Entry(info_frame, font=("Comic Sans", 12))
-        self.hour.grid(row=1, column=1, ipady=3, pady=(20, 15))
-        self.minute.grid(row=1, column=3, ipady=3, pady=(20, 15))
-        Label(info_frame, text=":").grid(row=1, column=2, pady=(20, 15))
+        self.hour = ttk.Combobox(info_frame, values=[i for i in range(0, 24)], width=6, font=("Comic Sans", 12))
+        self.hour.grid(row=1, column=1)
+        self.minute = ttk.Combobox(info_frame, values=[f"0{i}" if i < 10 else i for i in range(0, 60)], width=6, font=("Comic Sans", 12))
+        self.minute.grid(row=1, column=3)
+        Label(info_frame, text=":", font=("Comic Sans", 16)).grid(row=1, column=2)
 
     def _create_request(self):
+        
         _thread.start_new_thread( self._shop, ())
     
     def _shop(self):
@@ -60,15 +60,27 @@ class MainGUI:
         minute = self.minute.get()
         hour = self.hour.get()
 
-        browser = SupremeBrowser(user)
+        value = {"time":(hour, minute), "user": user, "link":link, "valid":True}
+        self.progress.add_elem(label=f"{hour}:{minute}\n" + (f"{link}" if len(link) < 30 else f"{link[0:30]}"), elem=value)
+
+        self.link.delete(0, 'end')
+        self.minute.delete(0, 'end')
+        self.hour.delete(0, 'end')
+
+        browser = SupremeBrowser(user) if 'supreme' in link else None
         browser.launch()
 
-        while(int(datetime.datetime.now().minute) < int(minute) and int(datetime.datetime.now().hour) < int(hour)):
-            pass
+        while int(datetime.datetime.now().minute) < int(minute) or int(datetime.datetime.now().hour) < int(hour):
+            if value["valid"] == False:
+                browser.close()
+                self.progress.remove(value=value)
+                _thread.exit()
 
         browser.add_to_cart_bylink(link)
         browser.checkout()
         browser.close()
+
+        self.progress.remove(value=value)
 
     
     def main(self):
