@@ -51,11 +51,10 @@ class AddUserForm:
         sizeinfo.grid(row=1, column=1, sticky=NW)
         Label(sizeinfo, text="Size").grid(row=0, column=0, columnspan=6)
 
-        for i, info in enumerate(list(self.entries.keys())[11:12]):
-            Label(sizeinfo, text=info + ":").grid(row = i + 1, column=0)
-            entry = Entry(sizeinfo)
-            entry.grid(row=i + 1, column=1, ipady=2, pady=1, columnspan=5)
-            self.entries[info] = entry
+        Label(sizeinfo, text= "Shoe Size:").grid(row = 1, column=0)
+        entry = Entry(sizeinfo)
+        entry.grid(row=1, column=1, ipady=2, pady=1, columnspan=5)
+        self.entries["Shoe Size"] = entry
         
         sizes = { "XS":"XSmall", "S":"Small", "M":"Medium","L":"Large", "XL":"XLarge"}
 
@@ -87,28 +86,5 @@ class AddUserForm:
     def get_info(self):
         return self.info
 
-    def done(self):
-        return  len(self.info.keys()) != 0
 
 
-"""
-def add_user():
-    global form
-    form = AddUserForm()
-
-def info():
-    global form
-    print(form.get_info())
-
-
-form = None
-root = Tk()
-button = Button(root, text="Add User", command=add_user).pack()
-button = Button(root, text="print info", command=info).pack()
-
-
-
-
-root.mainloop()
-
-"""

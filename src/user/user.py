@@ -19,13 +19,13 @@ class User:
         return self.data
 
     def shoe_size(self):
-        return self._shoe_size
+        return self.data["Shoe Size"]
 
     def shirt_size(self):
-        return self._shirt_size
+        return self.data["Shirt Size"]
 
     def pant_size(self):
-        return self._pant_size
+        return self.data["Pant Size"]
     
 
 
