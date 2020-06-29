@@ -31,7 +31,11 @@ class MainGUI:
 
         self._create_info(center_frame)
 
-    
+    """
+    Create the center link/time gui
+
+    parent: The parent frame which the gui will be added to
+    """
     def _create_info(self, parent):
         info_frame = Frame(parent, height=300, width=373)
         info_frame.grid(row=1, column=0, pady=10, sticky=N)
@@ -50,10 +54,15 @@ class MainGUI:
         self.minute.grid(row=1, column=3)
         Label(info_frame, text=":", font=("Comic Sans", 16)).grid(row=1, column=2)
 
+    """
+    Create a new thread and start a request
+    """
     def _create_request(self):
-        
         _thread.start_new_thread( self._shop, ())
     
+    """
+    Execute the request
+    """
     def _shop(self):
         user = self.user.get_selected_value()
         link = self.link.get()
@@ -82,7 +91,9 @@ class MainGUI:
 
         self.progress.remove(value=value)
 
-    
+    """
+    Main function: displays GUI
+    """
     def main(self):
         self.root.mainloop()
 

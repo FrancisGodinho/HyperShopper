@@ -1,5 +1,9 @@
 class User:
-    
+
+    """
+    Class that represents a user
+    """
+
     def __init__(self, shoe_size=10, shirt_size="Large", pant_size="Large", data={}):
         self.data = data
         self._shoe_size = shoe_size
@@ -19,13 +23,13 @@ class User:
         return self.data
 
     def shoe_size(self):
-        return self.data["Shoe Size"]
+        return self._shoe_size
 
     def shirt_size(self):
-        return self.data["Shirt Size"]
+        return self._shirt_size
 
     def pant_size(self):
-        return self.data["Pant Size"]
+        return self._pant_size
     
 
 

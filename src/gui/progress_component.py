@@ -16,6 +16,9 @@ class ProgressComponent(InteractiveListGUI):
         Button(self.progress_frame, text="Cancel", width=20, height=2, command=self._cancel_request).grid(row=3, column=0, sticky=S, pady=(9, 0))
         Button(self.progress_frame, text="Show Details", width=20, height=2, command=self._show_details).grid(row=3, column=1, sticky=S, pady=(9, 0))
 
+    """
+    Cancels the selected request
+    """
     def _cancel_request(self):
 
         if self.get_selected_value() is None:
@@ -26,6 +29,12 @@ class ProgressComponent(InteractiveListGUI):
 
         self.remove_elem()
     
+    """
+    Remove a request from the list by the value
+
+    value: A {time, user, link} dictionary which represents the value of a request
+            which is to be removed
+    """
     def remove(self, value):
         for key in self.elem_list.keys():
             elem_value = self.elem_list[key]
@@ -33,6 +42,9 @@ class ProgressComponent(InteractiveListGUI):
                 self.remove_elem_by_key(key)
                 return 
 
+    """
+    Show details about the request to the user
+    """
     def _show_details(self):
         value = self.get_selected_value()
 
