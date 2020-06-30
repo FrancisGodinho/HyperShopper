@@ -1,7 +1,7 @@
 from gui.main_gui import MainGUI
 
 shopper = MainGUI()
-shopper.main()
+shopper.run()
 
 
 
