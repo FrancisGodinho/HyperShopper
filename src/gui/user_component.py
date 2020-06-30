@@ -15,9 +15,9 @@ class UserComponent(InteractiveListGUI):
         self.activebackground = activebackground
         self.activeforeground = activeforeground
 
-        self.user_comp = LabelFrame(root, height=500, width=320, bg=bg)
+        self.user_comp = LabelFrame(root, height=400, width=320, bg=bg)
         self.user_comp.grid(row=0, column=0, ipadx=2, ipady=2, sticky=NW)
-        self.max_length = 6
+        self.max_length = 4
 
         super().__init__(root=self.user_comp, title="Users", font="Helvetica", label_font_size=14, title_font_size=20, max_length=self.max_length)
 

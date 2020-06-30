@@ -24,16 +24,17 @@ class MainGUI:
 
         self.root = Tk()
         self.root.title("Hyper Shopper")
-        self.root.geometry("1024x500")
+        self.root.iconbitmap("images/hypershopper_favicon.ico")
+        self.root.geometry("1024x400")
         self.root.resizable(0, 0)
-        self.root.configure(bg="#121212")
+        self.root.configure(bg=self.bg)
 
         self.user = UserComponent(self.root, bg=self.bg, fg=self.fg, button_bg=self.button_bg, 
                     activebackground=self.activebackground, activeforeground=self.activeforeground, entry_bg=self.entry_bg)
         self.progress = ProgressComponent(self.root, bg=self.bg, fg=self.fg, button_bg=self.button_bg, 
                     activebackground=self.activebackground, activeforeground=self.activeforeground)
         
-        center_frame = Frame(self.root, height=500, width=373, bg=self.bg)
+        center_frame = Frame(self.root, height=400, width=373, bg=self.bg)
         center_frame.grid(row=0, column=1)
         center_frame.grid_propagate(False)
 
@@ -43,8 +44,8 @@ class MainGUI:
         self.logo = ImageTk.PhotoImage(file="images/logo.ppm") 
         
         Label(center_frame, image=self.logo, bg=self.bg).grid(row=0, column=0)
-        Button(center_frame, text="COP", padx=120, pady=15, font=("Open Sans", 20), command=self._create_request, bg=self.button_bg, fg=self.fg, 
-                activebackground=self.activebackground, activeforeground=self.activeforeground).grid(row=2, column=0, sticky=S)
+        Button(center_frame, text="COP", padx=120, pady=0, font=("Open Sans", 20), command=self._create_request, bg=self.button_bg, fg=self.fg, 
+                activebackground=self.activebackground, activeforeground=self.activeforeground).grid(row=2, column=0, sticky=S, padx=(0, 15))
 
         self._create_info(center_frame)
 
@@ -55,7 +56,7 @@ class MainGUI:
     """
     def _create_info(self, parent):
 
-        info_frame = Frame(parent, height=180, width=373, bg=self.bg)
+        info_frame = Frame(parent, height=120, width=373, bg=self.bg)
         info_frame.grid(row=1, column=0, pady=10, sticky=N, padx=10)
         info_frame.grid_propagate(False)
 
@@ -72,8 +73,17 @@ class MainGUI:
         self.minute.grid(row=1, column=3)
         Label(info_frame, text=":", font=("Comic Sans", 16), bg=self.bg, fg=self.fg).grid(row=1, column=2)
 
+        combostyle = ttk.Style() #adding color to combobox
+        combostyle.theme_create('combostyle', parent='alt',
+                         settings = {'TCombobox':
+                                     {'configure':
+                                      {'selectbackground': self.button_bg,'fieldbackground': self.button_bg,'background': self.button_bg, 
+                                        "selectforeground":self.fg, "arrowcolor":self.fg, "foreground":self.fg}
+                                       }})
+        combostyle.theme_use('combostyle') 
+
     """
-    Create a new thread and start a request
+    Creates a new request and starts a thread if the request was valid
     """
     def _create_request(self):
         if self.user.get_selected_value() is None:
@@ -101,15 +111,20 @@ class MainGUI:
             messagebox.showerror("Error", "Link has not been entered correctly. Enter a link from either supreme.com or nike.com")
             return
 
-        browser = SupremeBrowser(user) if 'supreme' in link else None
-        browser.launch()
-
         value = {"time":(hour, minute), "user": user, "link":link, "valid":True}
-        self.progress.add_elem(label=f"{hour}:{minute}\n" + (f"{link}" if len(link) < 30 else f"{link[0:30]}"), elem=value)
+        self.progress.add_elem(label=f"{hour}:{minute}\n Link: " + (link if len(link) < 24 else f"{link[0:24]}..."), elem=value)
 
         self.link.delete(0, 'end')
+
+        self.minute.configure(state="normal")
+        self.hour.configure(state="normal")
         self.minute.delete(0, 'end')
         self.hour.delete(0, 'end')
+        self.minute.configure(state="readonly")
+        self.hour.configure(state="readonly")
+
+        browser = SupremeBrowser(user) if 'supreme' in link else None
+        browser.launch()
 
         while int(datetime.datetime.now().minute) < int(minute) or int(datetime.datetime.now().hour) < int(hour):
             if value["valid"] == False:

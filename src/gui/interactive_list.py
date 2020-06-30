@@ -4,7 +4,7 @@ from tkinter import messagebox
 class InteractiveListGUI:
 
     def __init__(self, title, root, deselected_col="#2e2e2e", selected_col="#bd88ff", selected_fg="black", font="Helvetica", label_font_size=14, 
-                title_font_size=20, max_length=4, width=320, height=440, row=1, column=0, columnspan=3, bg="#121212", fg="#e6e6e6", label_highlight="#ceb2f1"):
+                title_font_size=20, max_length=4, width=320, height=340, row=1, column=0, columnspan=3, bg="#121212", fg="#e6e6e6", label_highlight="#ceb2f1"):
         
         self.deselected_col = deselected_col
         self.selected_col = selected_col

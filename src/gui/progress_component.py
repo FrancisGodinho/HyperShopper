@@ -12,12 +12,12 @@ class ProgressComponent(InteractiveListGUI):
         self.activebackground = activebackground
         self.activeforeground = activeforeground
 
-        self.progress_frame = LabelFrame(root, height=500, width=320, bg=bg)
+        self.progress_frame = LabelFrame(root, height=400, width=320, bg=bg)
         self.progress_frame.grid(row=0, column=3, ipadx=2, ipady=2, sticky=NE)
         self.progress_frame.grid_propagate(False)
 
         super().__init__(root=self.progress_frame, title="In Progress", deselected_col="#017167", selected_col="#00ae9e", font="Helvetica", 
-                        label_font_size=14, title_font_size=20, max_length=6, columnspan=2, row=0, column=0, label_highlight="#00c0af")
+                        label_font_size=14, title_font_size=20, max_length=4, columnspan=2, row=0, column=0, label_highlight="#00c0af")
 
         Button(self.progress_frame, text="Cancel", width=20, height=2, command=self._cancel_request, bg=button_bg, fg=fg, 
                 activebackground=activebackground, activeforeground=activeforeground).grid(row=3, column=0, sticky=S, pady=(9, 0))
@@ -67,7 +67,8 @@ class ProgressComponent(InteractiveListGUI):
 
         for i, data in enumerate(list(value.values())[:len(value.values()) - 1]):
             Label(info_box, text=labels[i] + ": ", bg=self.bg, fg=self.fg).grid(row=i, column=0, sticky=W)
-            Label(info_box, text=data.get_data("Name") if isinstance(data, User) else data, bg=self.bg, fg=self.fg).grid(row=i, column=1, sticky=W, ipady=1)
+            Label(info_box, text=data.get_data("Name") if isinstance(data, User) else f"{data[0]}:{data[1]}" if isinstance(data, tuple) else data, 
+                bg=self.bg, fg=self.fg).grid(row=i, column=1, sticky=W, ipady=1)
 
         Button(info_box, text="Exit", command=lambda:info_box.destroy(), bg=self.button_bg, fg=self.fg, activebackground=self.activebackground, 
                 activeforeground=self.activeforeground).grid(row=len(value.keys()), column=0, columnspan=2, ipadx=40, ipady=4, pady=5)
