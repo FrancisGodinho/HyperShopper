@@ -23,7 +23,7 @@ class InteractiveListGUI:
         self.elem_list = {}
         self.current_elem = None
 
-        Label(self.frame, text=title, font=(self.font, self.title_font_size), bg=bg, fg=fg).pack(pady=2)
+        Label(self.frame, text=title, font=(self.font, self.title_font_size), bg=bg, fg=fg).pack(pady=(5, 2))
     
     """
     Add an element to the interative list

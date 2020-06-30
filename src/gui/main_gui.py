@@ -4,6 +4,7 @@ import datetime
 import time
 import _thread
 from PIL import ImageTk, Image
+from tkinter import messagebox
 
 from gui.user_component import UserComponent
 from gui.progress_component import ProgressComponent
@@ -65,9 +66,9 @@ class MainGUI:
 
         # time
         Label(info_frame, text="Time:", font=("Comic Sans", 13), bg=self.bg, fg=self.fg).grid(row=1, column=0, sticky=W)
-        self.hour = ttk.Combobox(info_frame, values=[i for i in range(0, 24)], width=6, font=("Comic Sans", 12))
+        self.hour = ttk.Combobox(info_frame, values=[i for i in range(0, 24)], width=6, font=("Comic Sans", 12), state="readonly")
         self.hour.grid(row=1, column=1)
-        self.minute = ttk.Combobox(info_frame, values=[f"0{i}" if i < 10 else i for i in range(0, 60)], width=6, font=("Comic Sans", 12))
+        self.minute = ttk.Combobox(info_frame, values=[f"0{i}" if i < 10 else i for i in range(0, 60)], width=6, font=("Comic Sans", 12), state="readonly")
         self.minute.grid(row=1, column=3)
         Label(info_frame, text=":", font=("Comic Sans", 16), bg=self.bg, fg=self.fg).grid(row=1, column=2)
 
@@ -75,6 +76,16 @@ class MainGUI:
     Create a new thread and start a request
     """
     def _create_request(self):
+        if self.user.get_selected_value() is None:
+            messagebox.showerror("Error", "User has not been created correctly")
+            return
+        elif self.link.get() == "":
+            messagebox.showerror("Error", "Link has not been entered correctly")
+            return
+        elif self.minute.get() == "" or self.hour.get() == "":
+            messagebox.showerror("Error", "Time has not been set correctly")
+            return
+        
         _thread.start_new_thread( self._shop, ())
     
     """
@@ -86,15 +97,19 @@ class MainGUI:
         minute = self.minute.get()
         hour = self.hour.get()
 
+        if "supreme" not in link and "nike" not in link:
+            messagebox.showerror("Error", "Link has not been entered correctly. Enter a link from either supreme.com or nike.com")
+            return
+
+        browser = SupremeBrowser(user) if 'supreme' in link else None
+        browser.launch()
+
         value = {"time":(hour, minute), "user": user, "link":link, "valid":True}
         self.progress.add_elem(label=f"{hour}:{minute}\n" + (f"{link}" if len(link) < 30 else f"{link[0:30]}"), elem=value)
 
         self.link.delete(0, 'end')
         self.minute.delete(0, 'end')
         self.hour.delete(0, 'end')
-
-        browser = SupremeBrowser(user) if 'supreme' in link else None
-        browser.launch()
 
         while int(datetime.datetime.now().minute) < int(minute) or int(datetime.datetime.now().hour) < int(hour):
             if value["valid"] == False:
