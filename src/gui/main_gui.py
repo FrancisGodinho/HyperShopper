@@ -11,6 +11,7 @@ from gui.progress_component import ProgressComponent
 from user.user import User
 from browser.browser import Browser
 from browser.supreme_browser import SupremeBrowser
+from browser.nike_browser import NikeBrowser
 
 class MainGUI:
 
@@ -123,7 +124,7 @@ class MainGUI:
         self.minute.configure(state="readonly")
         self.hour.configure(state="readonly")
 
-        browser = SupremeBrowser(user) if 'supreme' in link else None
+        browser = SupremeBrowser(user) if 'supreme' in link else NikeBrowser(user)
         browser.launch()
 
         while int(datetime.datetime.now().minute) < int(minute) or int(datetime.datetime.now().hour) < int(hour):
@@ -132,7 +133,11 @@ class MainGUI:
                 self.progress.remove(value=value)
                 _thread.exit()
 
-        browser.add_to_cart_bylink(link)
+        success = browser.add_to_cart_bylink(link)
+        if success == False:
+            messagebox.showerror("Error", "Unable to add item to cart")
+            browser.close()
+            
         browser.checkout()
         browser.close()
 
