@@ -4,4 +4,4 @@ Companies such as Supreme use a limited supply to create demand and urge custome
 
 ## Screen Shots
 
-![](screenshots/showcase-1.jpg)
+![](/screenshots/showcase-1.jpg)
