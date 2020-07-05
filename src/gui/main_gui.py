@@ -26,7 +26,7 @@ class MainGUI:
         self.root = Tk()
         self.root.title("Hyper Shopper")
         self.root.iconbitmap("images/hypershopper_favicon.ico")
-        self.root.geometry("1024x400")
+        self.root.geometry("1027x400")
         self.root.resizable(0, 0)
         self.root.configure(bg=self.bg)
 
@@ -45,7 +45,7 @@ class MainGUI:
         self.logo = ImageTk.PhotoImage(file="images/logo.ppm") 
         
         Label(center_frame, image=self.logo, bg=self.bg).grid(row=0, column=0)
-        Button(center_frame, text="COP", padx=120, pady=0, font=("Open Sans", 20), command=self._create_request, bg=self.button_bg, fg=self.fg, 
+        Button(center_frame, text="BUY", padx=120, pady=0, font=("Comic Sans", 20), command=self._create_request, bg=self.button_bg, fg=self.fg, 
                 activebackground=self.activebackground, activeforeground=self.activeforeground).grid(row=2, column=0, sticky=S, padx=(0, 15))
 
         self._create_info(center_frame)
@@ -112,8 +112,8 @@ class MainGUI:
             messagebox.showerror("Error", "Link has not been entered correctly. Enter a link from either supreme.com or nike.com")
             return
 
-        value = {"time":(hour, minute), "user": user, "link":link, "valid":True}
-        self.progress.add_elem(label=f"{hour}:{minute}\n Link: " + (link if len(link) < 24 else f"{link[0:24]}..."), elem=value)
+        request = {"time":(hour, minute), "user": user, "link":link, "valid":True}
+        self.progress.add_elem(label=f"{hour}:{minute}\n Link: " + (link if len(link) < 24 else f"{link[0:24]}..."), elem=request)
 
         self.link.delete(0, 'end')
 
@@ -127,10 +127,10 @@ class MainGUI:
         browser = SupremeBrowser(user) if 'supreme' in link else NikeBrowser(user)
         browser.launch()
 
-        while int(datetime.datetime.now().minute) < int(minute) or int(datetime.datetime.now().hour) < int(hour):
-            if value["valid"] == False:
+        while int(datetime.datetime.now().minute) != int(minute) or int(datetime.datetime.now().hour) != int(hour):
+            if request["valid"] == False:
                 browser.close()
-                self.progress.remove(value=value)
+                self.progress.remove(value=request)
                 _thread.exit()
 
         success = browser.add_to_cart_bylink(link)
@@ -141,7 +141,7 @@ class MainGUI:
         browser.checkout()
         browser.close()
 
-        self.progress.remove(value=value)
+        self.progress.remove(value=request)
 
     """
     Main function: displays GUI

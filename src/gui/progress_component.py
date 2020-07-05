@@ -17,11 +17,11 @@ class ProgressComponent(InteractiveListGUI):
         self.progress_frame.grid_propagate(False)
 
         super().__init__(root=self.progress_frame, title="In Progress", deselected_col="#017167", selected_col="#00ae9e", font="Helvetica", 
-                        label_font_size=14, title_font_size=20, max_length=4, columnspan=2, row=0, column=0, label_highlight="#00c0af")
+                        label_font_size=14, title_font_size=20, max_length=4, columnspan=2, row=0, column=0, label_highlight="#00c0af", height=343)
 
-        Button(self.progress_frame, text="Cancel", width=20, height=2, command=self._cancel_request, bg=button_bg, fg=fg, 
+        Button(self.progress_frame, text="Cancel", font=("Comic Sans", 9), width=20, height=2, command=self._cancel_request, bg=button_bg, fg=fg, 
                 activebackground=activebackground, activeforeground=activeforeground).grid(row=3, column=0, sticky=S, pady=(9, 0))
-        Button(self.progress_frame, text="Show Details", width=20, height=2, command=self._show_details, bg=button_bg, fg=fg, 
+        Button(self.progress_frame, text="Show Details", font=("Comic Sans", 9), width=20, height=2, command=self._show_details, bg=button_bg, fg=fg, 
                 activebackground=activebackground, activeforeground=activeforeground).grid(row=3, column=1, sticky=S, pady=(9, 0))
 
     """
@@ -61,6 +61,7 @@ class ProgressComponent(InteractiveListGUI):
 
         info_box = Toplevel(padx=35, pady=15, bg=self.bg)
         info_box.title("Request Information")
+        info_box.iconbitmap("images/hypershopper_favicon.ico")
         info_box.resizable(0, 0)
 
         labels =  ["Time", "User", "Link"]
