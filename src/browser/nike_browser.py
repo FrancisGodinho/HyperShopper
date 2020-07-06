@@ -6,13 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementClickInterceptedException
 
-
-
 from browser.browser import Browser
 from user.user import User
-
-from time import sleep
-
 
 class NikeBrowser(Browser):
 
