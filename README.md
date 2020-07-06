@@ -4,9 +4,11 @@ Companies such as Supreme use a limited supply to create demand and urge custome
 
 ## Screen Shots
 Shown below is the HyperShopper's UI. On the left, the user is able to create/remove a user profile and view information about a particular profile. In the middle, the user is able to enter a product link along with the intended purchase time. On the right, the user is able to see all requests that are in progress and also cancel any requests if required. 
+
 ![HyperShopper showcase](screenshots/showcase.PNG)
 
 Below is the UI for creating a new user profile.
+
 ![add_user showcase](screenshots/add_user.PNG)
 
 ## Installation and Setup Instructions
